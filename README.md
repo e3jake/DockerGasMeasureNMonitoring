@@ -95,7 +95,12 @@ grafanaJson/GasMeasureMentatDrone1st.json
 
 # sudo apt-get update
 # sudo apt-get upgrade
-# git clone git://git.drogen.net/wiringPi
-# cd wiringPi
+# git clone https://github.com/WiringPi/WiringPi.git
+# cd WiringPi
 # git pull origin
 # ./build
+
+gpio -v #version
+gpio readall
+
+
