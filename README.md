@@ -89,3 +89,13 @@ Create -> Import -> https://grafana.com/grafana/dashboards/11912 선택후 저�
 grafanaJson/GasMeasureMentatDrone1st.json
 
 
+##
+## 4. GPIO 쉘상에서 확인
+##
+
+# sudo apt-get update
+# sudo apt-get upgrade
+# git clone git://git.drogen.net/wiringPi
+# cd wiringPi
+# git pull origin
+# ./build
