@@ -23,11 +23,11 @@
   "gnetId": 11912,
   "graphTooltip": 1,
   "id": 6,
-  "iteration": 1629619077034,
+  "iteration": 1630158037016,
   "links": [],
   "panels": [
     {
-      "datasource": null,
+      "datasource": "gasMeasurement",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -232,7 +232,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": null,
+      "datasource": "gasMeasurement",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -326,7 +326,7 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "gasMeasurement",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -12268,7 +12268,7 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -12288,5 +12288,5 @@
   "timezone": "browser",
   "title": "Gas Measurement at Drone 1st",
   "uid": "HmA4nQzgz",
-  "version": 8
+  "version": 12
 }

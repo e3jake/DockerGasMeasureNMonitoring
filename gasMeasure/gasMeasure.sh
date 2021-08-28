@@ -54,7 +54,7 @@ r_g2=`gpio -g read 24`
 
 check_sensor
 insert_db
-sleep 1
+sleep 2
 
 done
 
