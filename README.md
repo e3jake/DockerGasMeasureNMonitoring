@@ -71,7 +71,7 @@ admin/admin -> 비번변경
         3. Name : GASMeasurement
         4. Default check
         5. Type : InfluxDB
-        6. Url : http://localhost:8086
+        6. Url : http://localhost:8086 --대신--> http://192.168.*.*:8006 으로 해야 통신이 가능할 수 있음
         7. Database : gasdb
         8. User/Passwd : gasadmin/gasadmin
         9. Save&test
@@ -88,6 +88,8 @@ Create -> Import -> https://grafana.com/grafana/dashboards/11912 선택후 저�
         6. Alias : User
 grafanaJson/GasMeasureMentatDrone1st.json
 
+** Data source 에서 라즈베리파이 ip address를 localhost(127.0.0.1) 대신 192.168.*.*로 설정해야 통신이 가능할 수 있음
+** telegraf.conf 에서 influxdb url = http://localhost:8086 --> http://192.168.*.*:8086 으로 해서 통신테스트 필요
 
 ##
 ## 4. GPIO 쉘상에서 확인
