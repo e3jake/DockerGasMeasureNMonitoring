@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 function check_sensor()
 {
 	d_m=700
@@ -34,7 +36,7 @@ function check_sensor()
 function insert_db()
 {
 
-	echo "$d_m $f_m $r_m"
+	##@echo "$d_m $f_m $r_m"
 
 curl -X POST 'http://127.0.0.1:8086/write?db=gasdb&u=gasadmin&p=gasadmin' --data-binary "gasdb,host=drone default_m=$d_m
 gasdb,host=drone front_m=$f_m
