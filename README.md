@@ -19,8 +19,8 @@
 > sudo apt-get install docker.io docker-compose
 > sudo usermod -aG docker userid
 > sudo systemctl enabler docker
-> docker version 설치확인
-> docker-compose version 설치확인
+> docker version          # 설치확인
+> docker-compose version  # 설치확인
 ```
 
 ### 1.3 도커 이미지 다운로드 및 설치
@@ -42,8 +42,8 @@
 > cd ~/rpi-tig
 > ./start.sh
 
-> docker ps -a 이미지설치확인
-> docker ps 도커 패키지 실행여부
+> docker ps -a      # 이미지설치확인
+> docker ps 도커    # 패키지 실행여부
    pi@raspberrypi:~/gasProject/rpi-docker $ docker ps 시 결과 참조
   ----------------------------------------------------------------------------
    CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                                                                    NAMES
@@ -51,7 +51,9 @@
    5b23cafbfa06        grafana/grafana:latest   "/run.sh"                17 hours ago        Up 6 hours          0.0.0.0:3000->3000/tcp                                                   grafana
    71dfea3b0ce4        influxdb:1.8.4           "/entrypoint.sh infl…"   17 hours ago        Up 6 hours          0.0.0.0:8083->8083/tcp, 0.0.0.0:8086->8086/tcp, 0.0.0.0:8090->8090/tcp   influxdb
   ----------------------------------------------------------------------------
-> docker logs influxdb influxdb 로그확인
+> docker logs influxdb   # 로그확인
+> docker logs telegraf
+> docker logs grafana
 ```
 
 
@@ -64,26 +66,20 @@
 influxdb 접속하기, admin password는 rpi-tig내 env.influxdb 파일에 있음(랜덤생성됨)
 > docker exec -it influxdb influx -username admin -password <admin>
 > use telegraf
-데이터베이스 gasdb 생성하기
-> create database gasdb
-사용자 생성 및 권한주기
-> create user <username> with password <password> with all privileges
-> grant all <database> to <username>
-> 예시 create user gasadmin with password gasadmin with all privileges
-> 예시 grant all gasadmin to gasadmin
-확인하기
-> show databases
-> show users
+> create database gasdb                        # 데이터베이스 gasdb 생성하기
+> create user <username> with password <password> with all privileges     사용자 생성 및 권한주기
+> grant all <database> to <username>           # 예시 create user gasadmin with password gasadmin with all privileges
+                                               # 예시 grant all gasadmin to gasadmin
+> show databases    # 데이터 베이스 확인하기
+> show users        # 생성된 사용자 확인하기
 하위에 생성된 데이터베이스 gasdb와 생성된 사용자계정 gasadmin이 보이면 정상
 ```
 
 ### 2.2 telegraf 데이터 확인
 ```
-influxdb 접속하기
-> docker exec -it influxdb influx -username admin -password <admin>
+> docker exec -it influxdb influx -username admin -password <admin>   # influxdb 접속하기
 > use telegraf
-> select * from cpu limit 10
-하위에 데이터가 나오면 정상적으로 쌓이고 있음
+> select * from cpu limit 10            # 하위에 데이터가 나오면 정상적으로 쌓이고 있음
 ```
 
 ### 2.3 gasdb 데이터 입력하기
@@ -127,7 +123,10 @@ exit 0
 # 3. Grafana 셋팅
 #
 
-### 3.1 grafana 접속 : http://ipaddress:3000  초기 ID/비번admin/admin -> 비번변경
+### 3.1 grafana 접속 
+```
+http://ipaddress:3000 초기  ID/비번   admin/admin -> 비번변경
+```
 
 ### 3.2 데이터소스 추가
 ```
@@ -146,7 +145,7 @@ exit 0
 
 ### 3.3 대시보드 추가
 ```
-> Create -> Import -> GasMeasureMentatDrone1st.json 선택후 저장하면 기본 화면 
+> Create -> Import -> GasMeasureMentatDrone1st.json  선택후 저장하면 기본 화면 
 Json파일 https://github.com/e3jake/GasMeasurementProject/tree/main/grafanaJson 참조
 정상적이지 않을경우
 Create -> Import -> https://grafana.com/grafana/dashboards/11912 선택후 저장후
@@ -169,12 +168,12 @@ Create -> Import -> https://grafana.com/grafana/dashboards/11912 선택후 저�
 ```
 > sudo apt-get update
 > sudo apt-get upgrade
+> cd ~/
 > git clone https://github.com/WiringPi/WiringPi.git
-> cd WiringPi
+> cd ~/WiringPi
 > git pull origin
 > ./build
-설치확인
-> gpio -v 
+> gpio -v   # 설치확인
 > gpio readall
 해당 프로그램도 https://github.com/e3jake/GasMeasurementProject/tree/main/gasMeasure/gasMeasure.sh 파일을 참조하여 사용한다
 ```
