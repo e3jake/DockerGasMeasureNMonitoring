@@ -1,22 +1,31 @@
 이 프로젝트는 로봇(스파이더, 드론등등)에 라즈베라이를 연동시키고
-라즈베리파이에 공기질센서를 연결시켜 프로그래밍을 통하여 실시간 차트를 보여준다.
+라즈베리파이에 공기질 센서를 연결시켜 프로그래밍을 통하여 실시간 차트를 보여준다.
 
 ##
-## 1. 도커로 필요한 소프트웨어를 설치한다
+## 도커로 필요한 소프트웨어를 설치한다
 ##
 
 라즈베리파이용 도커를 이용하여 grafana, telegraf, influxdb를 설치한다.
-1) git clone https://github.com/elafargue/rpi-tig.git
-2) docker-compose.yml 파일에 influx-telegraf등 연동을 위한 port를 모두 열어준다
+1. 사전 설치 패키지(이미 설치된 패키지는 skip)
+> sudo apt-get update
+> sudo apt-get upgrade
+> sudo apt-get install libffi-dev libssl-dev
+> sudo apt-get install python3-dev
+> sudo apt-get install -y python3 python-pip
+
+2. 도커등 설치
+> sudo apt-get install docker.io docker-compose
+> sudo usermod -aG docker userid
+> sudo systemctl enabler docker
+> docker version 설치확인
+> docker-compose version 설치확인
+
+3. 도커 이미지 다운로드 및 설치
+> git clone https://github.com/elafargue/rpi-tig.git
+> cd rpi-tig
+> // docker-compose.yml 파일에 influx-telegraf 연동을 위한 port를 모두 열어준다. 
 rpi-docker/docker-compose.yml 참조
 ----------------------------------------------------------------------------
-influxdb:
-  image: influxdb:1.8.4
-  container_name: influxdb
-  restart: always
-#  mem_limit: 192m
-# Those ports don't need to be exposed to the local host, only
-# Telegraf/grafana are talking to it.
   ports:
     - "8086:8086"
     - "8083:8083"
