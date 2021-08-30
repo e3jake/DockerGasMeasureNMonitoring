@@ -1,5 +1,5 @@
-이 프로젝트는 로봇(스파이더, 드론등등)에 라즈베라이를 연동시키고
-라즈베리파이에 공기질 센서를 연결시켜 프로그래밍을 통하여 실시간 차트를 보여준다.
+이 프로젝트는 라즈베리파이에 공기질 센서를 연결시켜 프로그래밍을 통하여 실시간 차트를 보여준다.
+도커환경에 telegraf-influxdb-grafana를 구성한다
 
 #
 # 1. 도커로 필요한 소프트웨어를 설치한다
@@ -113,54 +113,44 @@ gasdb,host=drone rear_m=5678
 ```
 
 ### 2.4 gasdb 데이터 추출 및 입력 프로그램
-https://github.com/e3jake/GasMeasurementProject/tree/main/gasMeasure
-gasMeasure.sh 파일을 참조하여 수정하면 됨
+```
+https://github.com/e3jake/GasMeasurementProject/tree/main/gasMeasure/gasMeasure.sh 파일을 참조하여 사용한다
 
 라즈베리파이 구동시 자동으로 해당 파일이 실행토록 설정방법
 /etc/rc.local 파일을 수정
 ....
 ~~~program pull path/gasMeasure.sh &
 exit 0
+```
 
+#
+# 3. Grafana 셋팅
+#
 
-1) gasMeasure/dataSampleTest.sh 파일에 해당 db명과 사용자명을 확인후에 터미널에서 테스트후 정상적으로 입력되는지 확인해본다
-curl -X POST 'http://127.0.0.1:8086/write?db=gasdb&u=gasadmin&p=gasadmin' --data-binary "gasdb,host=drone default_m=$d_m
-gasdb,host=drone front_m=$random_f
-gasdb,host=drone rear_m=$random_r"
+### 3.1 grafana 접속 : http://ipaddress:3000  초기 ID/비번admin/admin -> 비번변경
 
-db : gasdb
-username : gasadmin
-password : gasadmin
-
-2) confirm
-# docker exec -it influxdb influx -username gasadmin -password gasadmin
-Connected to http://localhost:8086 version 1.8.4
-InfluxDB shell version: 1.8.4
->use gasdb
->select * from gasdb
-데이터 나오면 정상
-
-
-##
-## 3. Grafana 셋팅
-##
-
-1) grafana 접속 : http://ipaddress:3000
-admin/admin -> 비번변경
-2) 데이터소스추가
+### 3.2 데이터소스 추가
+```
         1. *->Configuration -> Data source 선택
         2. Add data source 클릭
-        3. Name : GASMeasurement
+        3. Name : GASMeasurement(자유롭게 명명)
         4. Default check
         5. Type : InfluxDB
         6. Url : http://localhost:8086 --대신--> http://192.168.*.*:8006 으로 해야 통신이 가능할 수 있음
-        7. Database : gasdb
-        8. User/Passwd : gasadmin/gasadmin
+        7. Database : gasdb (생성한 데이터베이스 명)
+        8. User/Passwd : gasadmin/9AvamVRQ5Wfi9vKvpzynZT1WDXrCJL (사용자계정 접속정보)
         9. Save&test
+        테스트시 정상적으로 나오지 않을때는 대부분 url접속이 안되는 경우가 많기 때문에 해당 정보를 정확히 입력하여 테스트할것
+        snapshot에 해당 이미지를 참조할것 (https://github.com/e3jake/GasMeasurementProject/tree/main/snapshot)
+```
 
-3) Create -> Import -> GasMeasureMentatDrone1st.json 선택후 저장하면 기본 화면 나옴
+### 3.3 대시보드 추가
+```
+> Create -> Import -> GasMeasureMentatDrone1st.json 선택후 저장하면 기본 화면 
+Json파일 https://github.com/e3jake/GasMeasurementProject/tree/main/grafanaJson 참조
 정상적이지 않을경우
 Create -> Import -> https://grafana.com/grafana/dashboards/11912 선택후 저장후
+
 판넬을 추가 아래 순서를 추가로 반복설정
         1. Data source : GASMeasurement
         2. Default : gasds
@@ -168,23 +158,25 @@ Create -> Import -> https://grafana.com/grafana/dashboards/11912 선택후 저�
         4. field(default_m)
         5. Time series
         6. Alias : User
-grafanaJson/GasMeasureMentatDrone1st.json
+        snapshot에 해당 이미지를 참조할것 (https://github.com/e3jake/GasMeasurementProject/tree/main/snapshot)
+```
 
-** Data source 에서 라즈베리파이 ip address를 localhost(127.0.0.1) 대신 192.168.*.*로 설정해야 통신이 가능할 수 있음
-** telegraf.conf 에서 influxdb url = http://localhost:8086 --> http://192.168.*.*:8086 으로 해서 통신테스트 필요
+#
+# 4. GPIO 쉘상에서 확인 GPIO값을 쉘스크립트로 활용하기 위한 패키지 설치
+#
 
-##
-## 4. GPIO 쉘상에서 확인
-##
-
-# sudo apt-get update
-# sudo apt-get upgrade
-# git clone https://github.com/WiringPi/WiringPi.git
-# cd WiringPi
-# git pull origin
-# ./build
-
-gpio -v #version
-gpio readall
+### 4.1 GPIO 패키지 설치
+```
+> sudo apt-get update
+> sudo apt-get upgrade
+> git clone https://github.com/WiringPi/WiringPi.git
+> cd WiringPi
+> git pull origin
+> ./build
+설치확인
+> gpio -v 
+> gpio readall
+해당 프로그램도 https://github.com/e3jake/GasMeasurementProject/tree/main/gasMeasure/gasMeasure.sh 파일을 참조하여 사용한다
+```
 
 
