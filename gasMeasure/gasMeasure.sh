@@ -1,6 +1,10 @@
 #!/bin/bash
 
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+URL=http://127.0.0.1:8086/write?db=
+DBMS=gasdb
+USER=gasadmin
+PASSWORD=9AvamVRQ5Wfi9vKvpzynZT1WDXrCJL
 
 function check_sensor()
 {
@@ -38,7 +42,7 @@ function insert_db()
 
 	##@echo "$d_m $f_m $r_m"
 
-curl -X POST 'http://127.0.0.1:8086/write?db=gasdb&u=gasadmin&p=gasadmin' --data-binary "gasdb,host=drone default_m=$d_m
+curl -X POST 'http://127.0.0.1:8086/write?db=gasdb&u=gasadmin&p=9AvamVRQ5Wfi9vKvpzynZT1WDXrCJL' --data-binary "gasdb,host=drone default_m=$d_m
 gasdb,host=drone front_m=$f_m
 gasdb,host=drone rear_m=$r_m"
 
