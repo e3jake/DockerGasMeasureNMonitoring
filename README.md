@@ -97,9 +97,7 @@ localhost가 아닌 네트웍 I/F의 IP주소를 입력
 > curl -I http://192.168.**.**:8086
 
 샘플 데이터 write 테스트
-> curl -X POST 'http://127.0.0.1:8086/write?db=gasdb&u=gasadmin&p=gasadmin' --data-binary "gasdb,host=drone default_m=700
-gasdb,host=drone front_m=1234
-gasdb,host=drone rear_m=5678
+> curl -X POST 'http://127.0.0.1:8086/write?db=gasdb&u=gasadmin&p=gasadmin' --data-binary "gasdb,host=drone default_m=700 gasdb,host=drone front_m=1234 gasdb,host=drone rear_m=5678"
 
 데이터 확인
 > docker exec -it influxdb influx -username gasadmin -password gasadmin
