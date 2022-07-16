@@ -66,10 +66,10 @@
 influxdb 접속하기, admin password는 rpi-tig내 env.influxdb 파일에 있음(랜덤생성됨)
 > docker exec -it influxdb influx -username admin -password <admin>
 > use telegraf
-> create database gasdb                        # 데이터베이스 gasdb 생성하기
-> create user <username> with password <password> with all privileges     사용자 생성 및 권한주기
-> grant all <database> to <username>           # 예시 create user gasadmin with password gasadmin with all privileges
-                                               # 예시 grant all gasadmin to gasadmin
+> create database gasdb                     # 데이터베이스 gasdb 생성하기
+> create user <username> with password <password> with all privileges     # 사용자 생성 및 권한주기
+> grant all on <database> to <username>     # 예시 create user gasadmin with password gasadmin with all privileges
+                                            # 예시 grant all on gasadmin to gasadmin
 > show databases    # 데이터 베이스 확인하기
 > show users        # 생성된 사용자 확인하기
 하위에 생성된 데이터베이스 gasdb와 생성된 사용자계정 gasadmin이 보이면 정상
@@ -97,7 +97,9 @@ localhost가 아닌 네트웍 I/F의 IP주소를 입력
 > curl -I http://192.168.**.**:8086
 
 샘플 데이터 write 테스트
-> curl -X POST 'http://127.0.0.1:8086/write?db=gasdb&u=gasadmin&p=gasadmin' --data-binary "gasdb,host=drone default_m=700 gasdb,host=drone front_m=1234 gasdb,host=drone rear_m=5678"
+> curl -X POST 'http://127.0.0.1:8086/write?db=gasdb&u=gasadmin&p=gasadmin' --data-binary "gasdb,host=drone default_m=700 
+gasdb,host=drone front_m=1234 
+gasdb,host=drone rear_m=5678"
 
 데이터 확인
 > docker exec -it influxdb influx -username gasadmin -password gasadmin
